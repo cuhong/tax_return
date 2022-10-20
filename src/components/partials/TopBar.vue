@@ -1,6 +1,6 @@
 <template>
   <div class="topbar-container">
-    <img class="logo" alt="logo" src="../../assets/logo/logo-color.png">
+    <img class="logo" alt="logo" src="../../assets/logo/logo-color.png" @click="goToHome">
     <div class="contact-button" @click="openChat">
       문의하기
     </div>
@@ -11,6 +11,9 @@
 export default {
   name: "TopBar",
   methods: {
+    goToHome() {
+      this.$router.push({name: "CompanyHome"})
+    },
     openChat() {
       this.$loadScript("https://t1.kakaocdn.net/kakao_js_sdk/2.0.0/kakao.min.js")
           .then(() => {
@@ -37,6 +40,7 @@ export default {
 .logo {
   object-fit: cover;
   height: 100%;
+  cursor: pointer;
 }
 
 .contact-button {
