@@ -25,7 +25,8 @@
           </div>
           <label class="label-text" for="cellphone">휴대전화번호</label>
           <input class="input-text"
-                 type="number"
+                 type="text"
+                 inputmode="decimal"
                  pattern="\d*"
                  @input="cellphoneInput"
                  @focus="cellphoneInputFocus"
@@ -42,7 +43,8 @@
           </div>
           <label class="label-text" for="ssn">주민등록번호</label>
           <input class="input-text"
-                 type="number"
+                 type="text"
+                 inputmode="decimal"
                  pattern="\d*"
                  @input="ssnInput"
                  @focus="ssnInputFocus"
