@@ -24,7 +24,15 @@
             휴대전화번호 ({{screenIndex}}/{{screens.length}})
           </div>
           <label class="label-text" for="cellphone">휴대전화번호</label>
-          <input class="input-text" type="text" @input="cellphoneInput" @focus="cellphoneInputFocus" @blur="cellphoneInputBlur" name="cellphone" id="cellphone" ref="cellphone">
+          <input class="input-text"
+                 type="number"
+                 pattern="\d*"
+                 @input="cellphoneInput"
+                 @focus="cellphoneInputFocus"
+                 @blur="cellphoneInputBlur"
+                 name="cellphone"
+                 id="cellphone"
+                 ref="cellphone">
         </div>
       </div>
       <div v-show="screen === 'ssn'">
@@ -33,7 +41,15 @@
             주민등록번호 ({{screenIndex}}/{{screens.length}})
           </div>
           <label class="label-text" for="ssn">주민등록번호</label>
-          <input class="input-text" type="text" @input="ssnInput" @focus="ssnInputFocus" @blur="ssnInputBlur" name="ssn" id="ssn" ref="ssn">
+          <input class="input-text"
+                 type="number"
+                 pattern="\d*"
+                 @input="ssnInput"
+                 @focus="ssnInputFocus"
+                 @blur="ssnInputBlur"
+                 name="ssn"
+                 id="ssn"
+                 ref="ssn">
         </div>
       </div>
     </div>
@@ -155,7 +171,7 @@ export default {
   color: rgb(255, 255, 255);
   font-weight: 900;
   display: inline-flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
@@ -181,7 +197,7 @@ export default {
   color: rgb(255, 255, 255);
   font-weight: 900;
   display: inline-flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;

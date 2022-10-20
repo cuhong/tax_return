@@ -2,11 +2,11 @@
   <div class="main-container">
     <TopBar/>
     <div class="page-title mb-3 mt-3">
-      첫 고개 페이지
+      첫 소개 페이지
     </div>
     <div class="page-sub-text">
-      <div>5분 안에 간편한 신고, 더 간편한 환급!</div>
-      <div>지금 카카오로 쉽게 가입하고 신고해보세요.</div>
+      <div>어쩌구 저쩌구 첫 소개 페이지에요.</div>
+      <div>문장을 못쓰겠어요.</div>
     </div>
   </div>
   <div class="bottom-container">
@@ -53,7 +53,7 @@ export default {
   color: rgb(59, 30, 30);
   font-weight: 900;
   display: inline-flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;

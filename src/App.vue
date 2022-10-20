@@ -14,7 +14,7 @@
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  height: 100vh;
+  height: 100%;
   justify-content: space-between;
 }
 </style>
