@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="bottom-container">
-    <div class="kakao-button" @click="goToLogin">
+    <div class="button-primary" @click="goToLogin">
       시작버튼
     </div>
   </div>
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 
-.kakao-button {
+.button-primary {
   flex-direction: row;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -49,8 +49,8 @@ export default {
   box-sizing: border-box;
   text-transform: uppercase;
   letter-spacing: normal;
-  background: rgb(250, 225, 0);
-  color: rgb(59, 30, 30);
+  background: var(--main-bg);
+  color: rgb(255, 255, 255);
   font-weight: 900;
   display: inline-flex;
   flex: 1 1 0;
