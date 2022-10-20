@@ -14,15 +14,9 @@
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  height: 100vh;
+  height: 90vh;
   justify-content: space-between;
 }
 
-@supports (-webkit-touch-callout: none) {
-  .restricted-width {
-    /* for ios safari 15, safe-area-inset-bottom is 0, so a special fix apply here */
-    height: -webkit-fill-available;
-  }
-}
 </style>
 
