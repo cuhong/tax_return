@@ -12,7 +12,7 @@
       <div class="input-radio-container">
         <input class="input-radio" type="radio" v-model="businessType" name="businessType" id="personal" value="personal">
         <label class="label-radio" for="personal">
-          <span>개인사업자</span>
+          <span>프리랜서/개인사업자</span>
         </label>
       </div>
       <div class="input-radio-container">
@@ -80,7 +80,7 @@ export default {
   color: rgb(255, 255, 255);
   font-weight: 900;
   display: inline-flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
@@ -106,7 +106,7 @@ export default {
   color: rgb(255, 255, 255);
   font-weight: 900;
   display: inline-flex;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
