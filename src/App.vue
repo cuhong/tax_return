@@ -6,28 +6,28 @@
 
 <script>
 export default {
-  // data: () => ({
-  //   // height: document.documentElement.clientHeight
-  //   height: window.innerHeight
-  // }),
-  // watch: {
-  //   height(newHeight) {
-  //     document.body.style.height = `${newHeight}px`
-  //     // this.$refs['main'].style.height = `${newHeight}px`
-  //   }
-  // },
-  // mounted() {
-  //   window.addEventListener('resize', this.setHeight);
-  // },
-  // unmounted() {
-  //   window.removeEventListener('resize', this.setHeight);
-  // },
-  // methods: {
-  //   setHeight() {
-  //     // this.height = document.documentElement.clientHeight;
-  //     this.height = window.innerHeight;
-  //   }
-  // }
+  data: () => ({
+    // height: document.documentElement.clientHeight
+    height: window.innerHeight
+  }),
+  watch: {
+    height(newHeight) {
+      document.body.style.height = `${newHeight}px`
+      // this.$refs['main'].style.height = `${newHeight}px`
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.setHeight);
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.setHeight);
+  },
+  methods: {
+    setHeight() {
+      // this.height = document.documentElement.clientHeight;
+      this.height = window.innerHeight;
+    }
+  }
 }
 </script>
 <style scoped>
