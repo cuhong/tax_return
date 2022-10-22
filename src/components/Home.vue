@@ -2,16 +2,30 @@
   <div class="main-container">
     <TopBar/>
     <div class="page-title mb-3 mt-3">
-      첫 소개 페이지
+      모르고 돌려받지 못한 세금 알피가 찾아드려요
     </div>
     <div class="page-sub-text">
-      <div>어쩌구 저쩌구 첫 소개 페이지에요.</div>
-      <div>문장을 못쓰겠어요.</div>
+      <div>최신 조세동향을 바탕으로 </div>
+      <div>
+        돌려받지 못한 여러분의 세금을 찾아드려요.
+      </div>
     </div>
   </div>
   <div class="bottom-container">
-    <div class="button-primary" @click="goToLogin">
+    <div class="button-primary mb-3" @click="goToLogin">
       시작버튼
+    </div>
+    <div class="copyright">
+      <div class="copyright-title mb-2">
+        법률사무소 문정
+      </div>
+      <div class="copyright-detail">
+        <div>대표변호사: 양홍수 | 개인정보보호책임자: 홍찬의</div>
+        <div>사업자등록번호: 307-14-69585</div>
+        <div>서울 서초구 서초대로 254, 708, 709호(서초동, 오퓨런스)</div>
+        <div>이메일 munjunglaw@gmail.com</div>
+        <div>Copyright © Law Office Munjung. All rights reserved.</div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,7 +48,15 @@ export default {
 </script>
 
 <style scoped>
-
+.copyright-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4f4f4f
+}
+.copyright-detail div {
+  font-size: 12px;
+  color: #4f4f4f
+}
 .button-primary {
   flex-direction: row;
   padding-left: 1rem;
