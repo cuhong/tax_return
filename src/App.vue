@@ -7,7 +7,7 @@
 <script>
 export default {
   data: () => ({
-    height: document.documentElement.clientHeight
+    height: window.innerHeight
   }),
   watch: {
     height(newHeight) {
@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     setHeight() {
-      this.height = document.documentElement.clientHeight;
+      this.height = window.innerHeight;
     }
   }
 }
