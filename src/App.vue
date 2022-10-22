@@ -7,11 +7,13 @@
 <script>
 export default {
   data: () => ({
+    // height: document.documentElement.clientHeight
     height: window.innerHeight
   }),
   watch: {
     height(newHeight) {
-      this.$refs['main'].style.height = `${newHeight}px`
+      document.body.style.height = `${newHeight}px`
+      // this.$refs['main'].style.height = `${newHeight}px`
     }
   },
   mounted() {
@@ -22,6 +24,7 @@ export default {
   },
   methods: {
     setHeight() {
+      // this.height = document.documentElement.clientHeight;
       this.height = window.innerHeight;
     }
   }
