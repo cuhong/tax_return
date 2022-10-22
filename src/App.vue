@@ -1,11 +1,32 @@
 <template>
   <div id="app" class="container-fluid restricted-width" ref="main">
-<!--      <router-link to="/">main</router-link>-->
-<!--      <router-link to="/info">info</router-link>-->
       <router-view></router-view>
   </div>
 </template>
 
+<script>
+export default {
+  data: () => ({
+    height: document.documentElement.clientHeight
+  }),
+  watch: {
+    height(newHeight) {
+      this.$refs['main'].style.height = `${newHeight}px`
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.setHeight);
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.setHeight);
+  },
+  methods: {
+    setHeight() {
+      this.height = document.documentElement.clientHeight;
+    }
+  }
+}
+</script>
 <style scoped>
 .restricted-width {
   max-width: 592px;
@@ -14,9 +35,8 @@
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  height: 90vh;
+  height: 100vh;
   justify-content: space-between;
 }
-
 </style>
 

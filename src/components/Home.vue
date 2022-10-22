@@ -19,12 +19,16 @@
       <div class="copyright-title mb-2">
         법률사무소 문정
       </div>
-      <div class="copyright-detail">
+      <div class="copyright-detail mb-1">
         <div>대표변호사: 양홍수 | 개인정보보호책임자: 홍찬의</div>
         <div>사업자등록번호: 307-14-69585</div>
         <div>서울 서초구 서초대로 254, 708, 709호(서초동, 오퓨런스)</div>
-        <div>이메일 munjunglaw@gmail.com</div>
+        <div class="mb-3">이메일 munjunglaw@gmail.com</div>
         <div>Copyright © Law Office Munjung. All rights reserved.</div>
+      </div>
+      <div class="policy">
+        <div @click="goToPolicyService">이용약관</div>
+        <div @click="goToPolicyPrivacy">개인정보 처리방침</div>
       </div>
     </div>
   </div>
@@ -42,12 +46,27 @@ export default {
   methods: {
     goToLogin() {
       this.$router.push({name:'Login', query: {next: "CompanyReceipt"}})
+    },
+    goToPolicyService() {
+      this.$router.push({name:'PolicyService'})
+    },
+    goToPolicyPrivacy() {
+      this.$router.push({name:'PolicyPrivacy'})
     }
   }
 }
 </script>
 
 <style scoped>
+.policy {
+  font-size: 12px;
+  color: #4f4f4f;
+  display: flex;
+}
+.policy div {
+  margin-right: 1rem;
+  cursor: pointer;
+}
 .copyright-title {
   font-size: 14px;
   font-weight: 600;

@@ -7,6 +7,16 @@ const routes = [
         component: () => import("../components/Home.vue"),
     },
     {
+        path: "/policy/privacy",
+        name: "PolicyPrivacy",
+        component: () => import("../components/policy/Privacy.vue"),
+    },
+    {
+        path: "/policy/service",
+        name: "PolicyService",
+        component: () => import("../components/policy/Service.vue"),
+    },
+    {
         path: "/login",
         name: "Login",
         component: () => import("../components/auth/Login.vue"),
