@@ -30,9 +30,9 @@ export default {
           throw kakaoLoginResponse.message
         }
         const {access, refresh} = kakaoLoginResponse.data
-        // setToken(access, refresh)
-        localStorage.setItem('accessToken', access);
-        localStorage.setItem('refreshToken', refresh);
+        setToken(access, refresh)
+        // localStorage.setItem('accessToken', access);
+        // localStorage.setItem('refreshToken', refresh);
         this.$router.push({name: 'CompanyReceipt'})
       } else if (kakaoParam.error === "access_denied") {
         this.$router.push({name: "Login"})

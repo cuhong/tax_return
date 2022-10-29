@@ -1,6 +1,6 @@
 import urlJoin from "url-join";
 import axios from "axios";
-import { useStorage } from "vue3-storage";
+import {StorageType, useStorage} from "vue3-storage";
 
 
 const storage = useStorage();
@@ -9,20 +9,22 @@ const storage = useStorage();
 const setToken = (accessToken, refreshToken) => {
     console.log("accessToken " + accessToken)
     console.log("refreshToken " + refreshToken)
+    // localStorage.setItem('accessToken', accessToken);
+    // localStorage.setItem('refreshToken', refreshToken);
     storage.setStorageSync('accessToken', accessToken);
     storage.setStorageSync('refreshToken', refreshToken);
 }
 
 const getToken = () => {
     return {
-        accessToken: localStorage.getItem('accessToken'),
-        refreshToken: localStorage.getItem('refreshToken')
+        accessToken: storage.getStorageSync('accessToken'),
+        refreshToken: storage.getStorageSync('refreshToken')
     }
 }
 
 const clearToken = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    storage.removeStorageSync('accessToken');
+    storage.removeStorageSync('refreshToken');
 }
 const verifyToken = async () => {
     const tokens = getToken();

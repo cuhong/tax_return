@@ -17,6 +17,6 @@ const app = createApp(App)
 app.config.globalProperties.axios = axios;
 
 app.use(store).use(
-    Vue3Storage, { namespace: "allfee_", storage: StorageType.Local }
+    Vue3Storage
 ).use(router).use(LoadScript).use(createVueKakaoSdk(VITE_KAKAO_APP_KEY)).mount('#app')
 
