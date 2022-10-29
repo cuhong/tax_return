@@ -27,7 +27,7 @@ export default {
   components: {
     TopBar,
   },
-  mounted() {
+  created() {
     this.$store.commit("loader/setIsLoading", false);
   },
   beforeUnmount() {
