@@ -45,8 +45,7 @@ export default {
   },
   methods: {
     goToLogin() {
-      this.$store.commit("loader/setIsLoading", true)
-      // this.$router.push({name:'Login', query: {next: "CompanyReceipt"}})
+      this.$router.push({name:'Login', query: {next: "CompanyReceipt"}})
     },
     goToPolicyService() {
       this.$router.push({name:'PolicyService'})
