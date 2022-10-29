@@ -20,7 +20,6 @@ import {setToken} from "../../services/auth.js";
 export default {
   name: "KakaoCallback",
   beforeUnmount() {
-    this.$store.commit("loader/setIsLoading", false);
   },
   async mounted() {
     this.$store.commit("loader/setIsLoading", true);
@@ -44,6 +43,7 @@ export default {
       alert(e)
       this.$router.push({name: "Login"})
     } finally {
+      this.$store.commit("loader/setIsLoading", false);
     }
   },
   components: {
