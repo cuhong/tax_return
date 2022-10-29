@@ -7,10 +7,8 @@
 
 <script>
 import Loader from "../src/components/partials/Loader.vue";
-// import { useStore } from "vuex";
 export default {
   data: () => ({
-    // height: document.documentElement.clientHeight
     height: window.innerHeight,
   }),
   components: {
@@ -24,6 +22,7 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.setHeight);
+    this.setHeight()
   },
   unmounted() {
     window.removeEventListener('resize', this.setHeight);
@@ -35,8 +34,8 @@ export default {
   },
   methods: {
     setHeight() {
-      this.height = document.documentElement.clientHeight;
-      // this.height = window.innerHeight;
+      // this.height = document.documentElement.clientHeight;
+      this.height = window.innerHeight;
     }
   }
 }
@@ -49,7 +48,8 @@ export default {
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  height: 100vh;
+  height: 100%;
+  height: -webkit-fill-available;
   justify-content: space-between;
 }
 </style>
