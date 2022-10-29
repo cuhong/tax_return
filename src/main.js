@@ -9,8 +9,14 @@ import axios from 'axios'
 import { createVueKakaoSdk } from 'vue3-kakao-sdk'
 const {VITE_KAKAO_APP_KEY} = import.meta.env;
 import store from './store';
+import Vue3Storage from "vue3-storage";
+import {StorageType} from "vue3-storage";
+
 
 const app = createApp(App)
 app.config.globalProperties.axios = axios;
-app.use(store).use(router).use(LoadScript).use(createVueKakaoSdk(VITE_KAKAO_APP_KEY)).mount('#app')
+
+app.use(store).use(
+    Vue3Storage, { namespace: "allfee_", storage: StorageType.Local }
+).use(router).use(LoadScript).use(createVueKakaoSdk(VITE_KAKAO_APP_KEY)).mount('#app')
 
