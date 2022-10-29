@@ -20,7 +20,7 @@ const verifyToken = async () => {
     const tokens = getToken();
     if (tokens.accessToken === null || tokens.refreshToken === null) {
         clearToken()
-        return null
+        return false
     }
     try {
         const verifyResponse = await axios.post(
