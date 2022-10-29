@@ -1,3 +1,9 @@
+<!--/**-->
+<!--# singo2 = TilkoComplexTaxReport(-->
+<!--#     "6", "홍찬의", "19860906", "01024846313", "8609061020710",-->
+<!--#     "20200101", "20201231", api_key-->
+<!--# )-->
+<!--**/-->
 <template>
   <div class="main-container-container">
     <TopBar/>
@@ -9,37 +15,10 @@
       <div>필요한 정보를 입력해주세요.</div>
     </div>
     <div>
-      <div v-show="screen === 'name'">
-        <div class="input-text-container">
-          <div class="input-header">
-            신청자명 ({{screenIndex}}/{{screens.length}})
-          </div>
-          <label class="label-text" for="name">신청자명</label>
-          <input class="input-text" type="text" @input="nameInput" name="name" id="name" ref="name">
-        </div>
-      </div>
-      <div v-show="screen === 'cellphone'">
+      <div v-show="nameEntered">
         <div class="input-text-container mb-3">
           <div class="input-header">
-            휴대전화번호 ({{screenIndex}}/{{screens.length}})
-          </div>
-          <label class="label-text" for="cellphone">휴대전화번호</label>
-          <input class="input-text"
-                 type="text"
-                 inputmode="decimal"
-                 pattern="\d*"
-                 @input="cellphoneInput"
-                 @focus="cellphoneInputFocus"
-                 @blur="cellphoneInputBlur"
-                 name="cellphone"
-                 id="cellphone"
-                 ref="cellphone">
-        </div>
-      </div>
-      <div v-show="screen === 'ssn'">
-        <div class="input-text-container mb-3">
-          <div class="input-header">
-            주민등록번호 ({{screenIndex}}/{{screens.length}})
+            주민등록번호
           </div>
           <label class="label-text" for="ssn">주민등록번호</label>
           <input class="input-text"
@@ -54,6 +33,33 @@
                  ref="ssn">
         </div>
       </div>
+      <div v-show="nameEntered">
+        <div class="input-text-container mb-3">
+          <div class="input-header">
+            휴대전화번호
+          </div>
+          <label class="label-text" for="cellphone">휴대전화번호</label>
+          <input class="input-text"
+                 type="text"
+                 inputmode="decimal"
+                 pattern="\d*"
+                 @input="cellphoneInput"
+                 @focus="cellphoneInputFocus"
+                 @blur="cellphoneInputBlur"
+                 name="cellphone"
+                 id="cellphone"
+                 ref="cellphone">
+        </div>
+      </div>
+      <div>
+        <div class="input-text-container">
+          <div class="input-header">
+            신청자명
+          </div>
+          <label class="label-text" for="name">신청자명</label>
+          <input class="input-text" type="text" @input="nameInput" name="name" id="name" ref="name" @keyup.enter="enterName">
+        </div>
+      </div>
     </div>
   </div>
   <div class="bottom-container">
@@ -62,7 +68,7 @@
         'button-disabled': !businessType,
         'button-primary': businessType
       }"
-      @click="next"
+      @click="enterName"
     >
       {{ this.businessType === null ? "사업자 형태를 선택하세요" : "다음 단계" }}
     </div>
@@ -79,47 +85,54 @@ export default {
   components: {
     TopBar
   },
+  mounted() {
+    this.$refs['name'].focus();
+  },
   data() {
     return {
-      screen: "name",
-      screens: ["name", "cellphone", "ssn"],
       businessType: 'personal',
       name: "",
       cellphone: "",
       cellphoneDisplay: "",
-      ssn: ""
+      ssn: "",
+      nameEntered: false,
     }
   },
-  mounted() {
-    this.$refs[this.screens[0]].focus()
-  },
   methods: {
-    next() {
-      var index = this.screens.findIndex((screenName) => {return screenName === this.screen})
-      console.log('index '+ index)
-      var screenName = this.screens[index]
+    enterName() {
+      console.log("enterName")
       try {
-        if (screenName === "name") {
-          nameValidator(this.name)
-        } else if (screenName === "cellphone") {
-          cellphoneValidator(this.cellphone)
-        } else if (screenName === "ssn") {
-          ssnValidator(this.ssn)
-        }
-        const nextScreen = this.screens[index + 1]
-        if (nextScreen === undefined) {
-          alert('개발 중입니다.')
-        } else {
-          this.screen = nextScreen
-          this.$nextTick(() => {
-            this.$refs[nextScreen].focus()
-          })
-        }
+        nameValidator(this.name)
+        this.nameEntered = true
+        this.$refs['cellphone'].focus()
       } catch (e) {
-        alert(e)
+        console.log(e)
       }
     },
+    // next() {
+    //   try {
+    //     if (screenName === "name") {
+    //       nameValidator(this.name)
+    //     } else if (screenName === "cellphone") {
+    //       cellphoneValidator(this.cellphone)
+    //     } else if (screenName === "ssn") {
+    //       ssnValidator(this.ssn)
+    //     }
+    //     const nextScreen = this.screens[index + 1]
+    //     if (nextScreen === undefined) {
+    //       alert('개발 중입니다.')
+    //     } else {
+    //       this.screen = nextScreen
+    //       this.$nextTick(() => {
+    //         this.$refs[nextScreen].focus()
+    //       })
+    //     }
+    //   } catch (e) {
+    //     alert(e)
+    //   }
+    // },
     nameInput(event) {
+      this.nameEntered = false
       this.name = event.target.value
     },
     cellphoneInput(event) {
@@ -142,13 +155,6 @@ export default {
     ssnInputBlur(event) {
       event.target.value = ssnFormatter(onlyDigit(event.target.value))
     },
-  },
-  computed: {
-    screenIndex() {
-      return this.screens.findIndex((screenName) => {
-        return screenName === this.screen
-      }) + 1
-    }
   }
 }
 </script>
