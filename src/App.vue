@@ -49,7 +49,7 @@ export default {
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
   height: 100%;
-  height: -webkit-fill-available;
+  /*height: -webkit-fill-available;*/
   justify-content: space-between;
 }
 </style>
