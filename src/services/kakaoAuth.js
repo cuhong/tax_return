@@ -2,7 +2,7 @@ import urlJoin from "url-join";
 
 const {VITE_HOST, VITE_BACKEND_HOST} = import.meta.env;
 import router from "../router";
-import {setToken} from "../services/auth.js";
+// import {setToken} from "../services/auth.js";
 import { useKakao } from 'vue3-kakao-sdk'
 import axios from "axios";
 const { kakao } = useKakao()
