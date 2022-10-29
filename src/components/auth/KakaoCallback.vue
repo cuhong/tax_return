@@ -43,6 +43,7 @@ export default {
       alert(e)
       this.$router.push({name: "Login"})
     } finally {
+      this.$store.commit("loader/setIsLoading", false);
     }
   },
   components: {
