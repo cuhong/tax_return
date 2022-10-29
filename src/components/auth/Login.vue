@@ -30,6 +30,9 @@ export default {
   mounted() {
     this.$store.commit("loader/setIsLoading", false);
   },
+  beforeUnmount() {
+    this.$store.commit("loader/setIsLoading", false);
+  },
   methods: {
     async requestKakaoAuth() {
       try {
