@@ -54,8 +54,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const requireAuth = to.meta.requireAuth
     const authStatus = await verifyToken()
-    console.log("requireAuth: " + requireAuth)
-    console.log("authStatus: " + authStatus)
     if (requireAuth === null) {
         next();
     } else if (requireAuth === true) {
