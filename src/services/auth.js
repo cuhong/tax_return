@@ -1,6 +1,7 @@
 import urlJoin from "url-join";
 import axios from "axios";
 const setToken = (accessToken, refreshToken) => {
+    console.log('setToken')
   localStorage.setItem('accessToken', accessToken);
   localStorage.setItem('refreshToken', refreshToken);
 }
