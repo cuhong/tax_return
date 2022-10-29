@@ -1,6 +1,6 @@
 <template>
   <div class="topbar-container">
-    <img class="logo" alt="logo" src="../../assets/logo/logo-color.png" @click="goToHome">
+    <img class="logo" alt="logo" src="../../assets/logo/logo-color-small.png" @click="goToHome">
     <div class="contact-button" @click="openChat">
       문의하기
     </div>
