@@ -14,12 +14,6 @@ export default {
   components: {
     Loader
   },
-  watch: {
-    height(newHeight) {
-      document.body.style.height = `${newHeight}px`
-      // this.$refs['main'].style.height = `${newHeight}px`
-    }
-  },
   mounted() {
     window.addEventListener('resize', this.setHeight);
     this.setHeight()
@@ -34,8 +28,8 @@ export default {
   },
   methods: {
     setHeight() {
-      // this.height = document.documentElement.clientHeight;
-      this.height = window.innerHeight;
+      var height = document.documentElement.clientHeight;
+      this.$refs['main'].style.height = `${height}px`;
     }
   }
 }
@@ -48,7 +42,7 @@ export default {
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  height: 100%;
+  /*height: 100%;*/
   /*height: -webkit-fill-available;*/
   justify-content: space-between;
 }
