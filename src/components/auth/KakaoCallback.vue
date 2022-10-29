@@ -31,7 +31,7 @@ export default {
         }
         const {access, refresh} = kakaoLoginResponse.data
         setToken(access, refresh)
-        alert("로그인에 성공했습니다.")
+        this.$router.push({name: 'CompanyReceipt'})
       } else if (kakaoParam.error === "access_denied") {
         this.$router.push({name: "Login"})
       } else {
