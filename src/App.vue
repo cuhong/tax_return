@@ -35,8 +35,8 @@ export default {
   },
   methods: {
     setHeight() {
-      // this.height = document.documentElement.clientHeight;
-      this.height = window.innerHeight;
+      this.height = document.documentElement.clientHeight;
+      // this.height = window.innerHeight;
     }
   }
 }
