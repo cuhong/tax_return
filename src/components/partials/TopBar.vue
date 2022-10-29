@@ -53,5 +53,6 @@ export default {
   padding-left: 5px;
   padding-right: 5px;
   height: 28px;
+  user-select: none;
 }
 </style>

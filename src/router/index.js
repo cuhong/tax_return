@@ -22,6 +22,11 @@ const routes = [
         component: () => import("../components/auth/Login.vue"),
     },
     {
+        path: "/auth/kakao",
+        name: "KakaoCallback",
+        component: () => import("../components/auth/KakaoCallback.vue"),
+    },
+    {
         path: "/company/receipt",
         name: "CompanyReceipt",
         component: () => import("../components/receipt/Receipt.vue"),

@@ -10,24 +10,35 @@
     </div>
   </div>
   <div class="bottom-container">
-    <div class="kakao-button" @click="receipt">
+    <div class="kakao-button" @click="requestKakaoAuth">
       카카오계정으로 계속하기
     </div>
   </div>
 </template>
 
 <script>
+
 import TopBar from "../partials/TopBar.vue";
+import {requestKakaoAuthCode} from "../../services/kakaoAuth.js";
+
 
 export default {
   name: "Login",
   components: {
-    TopBar
+    TopBar,
+  },
+  mounted() {
+    this.$store.commit("loader/setIsLoading", false);
   },
   methods: {
-    receipt() {
-      this.$router.push({name: this.$route.query.next})
-    }
+    async requestKakaoAuth() {
+      try {
+        this.$store.commit("loader/setIsLoading", true);
+        requestKakaoAuthCode()
+      } catch (e) {
+        alert('카카오 로그인에 실패했습니다.')
+      }
+    },
   }
 }
 </script>
@@ -57,6 +68,7 @@ export default {
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  width: 100%
+  width: 100%;
+  user-select: none;
 }
 </style>

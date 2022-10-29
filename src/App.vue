@@ -1,15 +1,21 @@
 <template>
+  <Loader :is-loading="isLoading"/>
   <div id="app" class="container-fluid restricted-width" ref="main">
       <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Loader from "../src/components/partials/Loader.vue";
+// import { useStore } from "vuex";
 export default {
   data: () => ({
     // height: document.documentElement.clientHeight
-    height: window.innerHeight
+    height: window.innerHeight,
   }),
+  components: {
+    Loader
+  },
   watch: {
     height(newHeight) {
       document.body.style.height = `${newHeight}px`
@@ -21,6 +27,11 @@ export default {
   },
   unmounted() {
     window.removeEventListener('resize', this.setHeight);
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.loader.isLoading
+    }
   },
   methods: {
     setHeight() {
@@ -38,7 +49,7 @@ export default {
   flex-direction: column;
   overflow: auto;
   padding: 0 1.5rem 1.5rem;
-  /*height: 100vh;*/
+  height: 100vh;
   justify-content: space-between;
 }
 </style>

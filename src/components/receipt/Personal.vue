@@ -178,7 +178,8 @@ export default {
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  width: 100%
+  width: 100%;
+  user-select: none;
 }
 
 .button-disabled {
@@ -204,7 +205,8 @@ export default {
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  width: 100%
+  width: 100%;
+  user-select: none;
 }
 
 .label-text {

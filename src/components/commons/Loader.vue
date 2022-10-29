@@ -1,53 +1,34 @@
 <template>
-  <div :class="{'loader-container': true, 'loader-container-block': isBlock}" v-if="isLoading">
-    <div class="loader">Loading...</div>
+  <div class="loader">
   </div>
 </template>
 
 <script>
 export default {
   name: "Loader",
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false
-    },
-    isBlock: {
-      type: Boolean,
-      default: true
+  data() {
+    return {
+      isLoading: true
     }
   }
 }
 </script>
 
 <style scoped>
-.loader-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 
-.loader-container-block {
-  background-color: white;
-}
+
+
 .loader,
 .loader:before,
 .loader:after {
-  background: var(--main-bg);
+  background: #ffffff;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
 }
-
 .loader {
-  color: var(--main-bg);
+  color: #ffffff;
   text-indent: -9999em;
   margin: 88px auto;
   position: relative;
@@ -57,25 +38,29 @@ export default {
   transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
   animation-delay: -0.16s;
-}
 
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 999999999;
+}
 .loader:before,
 .loader:after {
   position: absolute;
   top: 0;
   content: '';
 }
-
 .loader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
-
 .loader:after {
   left: 1.5em;
 }
-
 @-webkit-keyframes load1 {
   0%,
   80%,
@@ -88,7 +73,6 @@ export default {
     height: 5em;
   }
 }
-
 @keyframes load1 {
   0%,
   80%,
