@@ -15,7 +15,8 @@
       <div>필요한 정보를 입력해주세요.</div>
     </div>
     <div>
-      <div v-show="nameEntered">
+      <Transition name="slide">
+      <div v-show="cellphoneEntered">
         <div class="input-text-container mb-3">
           <div :class="{'input-header-focused': focus === 'ssn', 'input-header': focus !== 'ssn'}">
             주민등록번호
@@ -33,25 +34,29 @@
                  ref="ssn">
         </div>
       </div>
-      <div v-show="nameEntered">
-        <div class="input-text-container mb-3">
-          <div :class="{'input-header-focused': focus === 'cellphone', 'input-header': focus !== 'cellphone'}">
-            휴대전화번호
-          </div>
-          <label class="label-text" for="cellphone">휴대전화번호</label>
-          <input
+      </Transition>
+      <Transition name="slide">
+        <div v-show="nameEntered">
+          <div class="input-text-container mb-3">
+            <div :class="{'input-header-focused': focus === 'cellphone', 'input-header': focus !== 'cellphone'}">
+              휴대전화번호
+            </div>
+            <label class="label-text" for="cellphone">휴대전화번호</label>
+            <input
                 class="input-text"
-                 type="text"
-                 inputmode="decimal"
-                 pattern="\d*"
-                 @input="cellphoneInput"
-                 @focus="cellphoneInputFocus"
-                 @blur="cellphoneInputBlur"
-                 name="cellphone"
-                 id="cellphone"
-                 ref="cellphone">
+                type="text"
+                inputmode="decimal"
+                pattern="\d*"
+                @input="cellphoneInput"
+                @focus="cellphoneInputFocus"
+                @blur="cellphoneInputBlur"
+                name="cellphone"
+                id="cellphone"
+                ref="cellphone">
+          </div>
         </div>
-      </div>
+      </Transition>
+
       <div>
         <div class="input-text-container">
           <div :class="{'input-header-focused': focus === 'name', 'input-header': focus !== 'name'}">
@@ -107,6 +112,7 @@ export default {
       nameEntered: false,
       cellphone: "",
       cellphoneDisplay: "",
+      cellphoneEntered: false,
       ssn: "",
       focus: null,
     }
@@ -130,8 +136,20 @@ export default {
       this.name = event.target.value
     },
     cellphoneInput(event) {
-      this.cellphone = onlyDigit(event.target.value).substring(0, 11)
-      event.target.value = cellphoneFormatter(this.cellphone)
+      try {
+        this.cellphoneEntered = false
+        const value = onlyDigit(event.target.value).substring(0, 11)
+        cellphoneValidator(value)
+        this.cellphone = value
+        event.target.value = cellphoneFormatter(this.cellphone)
+        this.cellphoneEntered = true
+        this.$nextTick(() => {
+          this.$refs['ssn'].focus()
+        })
+      } catch (e) {
+        this.cellphoneEntered = false
+        this.cellphone = onlyDigit(event.target.value).substring(0, 11)
+      }
     },
     cellphoneInputFocus(event) {
       this.focus = 'cellphone'
@@ -233,6 +251,26 @@ export default {
 .input-text:focus {
   border-bottom: var(--main-bg) 2px solid;
   outline: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+
+.slide-leave-active,
+.slide-enter-active {
+  transition: transform 0.2s ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  transform: translate(0, 30%);
 }
 
 </style>
