@@ -108,6 +108,14 @@
 
 .input-header {
     line-height: 1.5;
+    color: rgb(105, 105, 105);
+    cursor: default;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.input-header-focused {
+    line-height: 1.5;
     color: rgb(0, 0, 0);
     cursor: default;
     font-size: 1rem;

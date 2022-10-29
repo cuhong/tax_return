@@ -17,7 +17,7 @@
     <div>
       <div v-show="nameEntered">
         <div class="input-text-container mb-3">
-          <div class="input-header">
+          <div :class="{'input-header-focused': focus === 'ssn', 'input-header': focus !== 'ssn'}">
             주민등록번호
           </div>
           <label class="label-text" for="ssn">주민등록번호</label>
@@ -35,11 +35,12 @@
       </div>
       <div v-show="nameEntered">
         <div class="input-text-container mb-3">
-          <div class="input-header">
+          <div :class="{'input-header-focused': focus === 'cellphone', 'input-header': focus !== 'cellphone'}">
             휴대전화번호
           </div>
           <label class="label-text" for="cellphone">휴대전화번호</label>
-          <input class="input-text"
+          <input
+                class="input-text"
                  type="text"
                  inputmode="decimal"
                  pattern="\d*"
@@ -53,22 +54,32 @@
       </div>
       <div>
         <div class="input-text-container">
-          <div class="input-header">
+          <div :class="{'input-header-focused': focus === 'name', 'input-header': focus !== 'name'}">
             신청자명
           </div>
           <label class="label-text" for="name">신청자명</label>
-          <input class="input-text" type="text" @input="nameInput" name="name" id="name" ref="name" @keyup.enter="enterName">
+          <input
+              class="input-text"
+              type="text"
+              @input="nameInput"
+              name="name"
+              id="name"
+              ref="name"
+              @focus="focus='name'"
+              @blur="focus=null"
+              @keyup.enter="enterName">
+          <small v-if="nameError">
+            {{nameError}}
+          </small>
         </div>
       </div>
     </div>
   </div>
   <div class="bottom-container">
     <div
-      :class="{
-        'button-disabled': !businessType,
-        'button-primary': businessType
-      }"
+      class="button-primary"
       @click="enterName"
+      v-if="!nameEntered"
     >
       {{ this.businessType === null ? "사업자 형태를 선택하세요" : "다음 단계" }}
     </div>
@@ -92,46 +103,29 @@ export default {
     return {
       businessType: 'personal',
       name: "",
+      nameError: null,
+      nameEntered: false,
       cellphone: "",
       cellphoneDisplay: "",
       ssn: "",
-      nameEntered: false,
+      focus: null,
     }
   },
   methods: {
     enterName() {
-      console.log("enterName")
       try {
         nameValidator(this.name)
         this.nameEntered = true
-        this.$refs['cellphone'].focus()
+        this.$nextTick(() => {
+          this.$refs['cellphone'].focus()
+        })
       } catch (e) {
-        console.log(e)
+        this.nameError = e
+        this.$refs['name'].focus()
       }
     },
-    // next() {
-    //   try {
-    //     if (screenName === "name") {
-    //       nameValidator(this.name)
-    //     } else if (screenName === "cellphone") {
-    //       cellphoneValidator(this.cellphone)
-    //     } else if (screenName === "ssn") {
-    //       ssnValidator(this.ssn)
-    //     }
-    //     const nextScreen = this.screens[index + 1]
-    //     if (nextScreen === undefined) {
-    //       alert('개발 중입니다.')
-    //     } else {
-    //       this.screen = nextScreen
-    //       this.$nextTick(() => {
-    //         this.$refs[nextScreen].focus()
-    //       })
-    //     }
-    //   } catch (e) {
-    //     alert(e)
-    //   }
-    // },
     nameInput(event) {
+      this.nameError = null
       this.nameEntered = false
       this.name = event.target.value
     },
@@ -140,6 +134,7 @@ export default {
       event.target.value = cellphoneFormatter(this.cellphone)
     },
     cellphoneInputFocus(event) {
+      this.focus = 'cellphone'
       event.target.value = onlyDigit(event.target.value)
     },
     cellphoneInputBlur(event) {
@@ -150,6 +145,7 @@ export default {
       event.target.value = ssnFormatter(this.ssn)
     },
     ssnInputFocus(event) {
+      this.focus = 'ssn'
       event.target.value = onlyDigit(event.target.value)
     },
     ssnInputBlur(event) {
