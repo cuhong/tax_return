@@ -30,7 +30,7 @@ export default {
   methods: {
     async requestKakaoAuth() {
       try {
-        this.$store.commit("loader/setIsLoading", true);
+        // this.$store.commit("loader/setIsLoading", true);
         requestKakaoAuthCode()
       } catch (e) {
         alert('카카오 로그인에 실패했습니다.')
