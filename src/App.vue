@@ -1,5 +1,5 @@
 <template>
-  <Loader :is-loading="isLoading"/>
+  <Loader/>
   <div id="app" class="container-fluid restricted-width" ref="main">
       <router-view></router-view>
   </div>
@@ -8,9 +8,6 @@
 <script>
 import Loader from "../src/components/partials/Loader.vue";
 export default {
-  data: () => ({
-    height: window.innerHeight,
-  }),
   components: {
     Loader
   },
@@ -20,11 +17,6 @@ export default {
   },
   unmounted() {
     window.removeEventListener('resize', this.setHeight);
-  },
-  computed: {
-    isLoading() {
-      return this.$store.state.loader.isLoading
-    }
   },
   methods: {
     setHeight() {
@@ -41,10 +33,11 @@ export default {
   flex: 1 1 0;
   flex-direction: column;
   overflow: auto;
-  padding: 0 1.5rem 1.5rem;
-  /*height: 100%;*/
-  /*height: -webkit-fill-available;*/
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 1.5rem;
   justify-content: space-between;
+  overflow-y: auto;
 }
 </style>
 

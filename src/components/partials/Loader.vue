@@ -7,14 +7,12 @@
 <script>
 export default {
   name: "Loader",
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: false
+  computed: {
+    isLoading() {
+      return this.$store.state.loader.isLoading
     },
-    isBlock: {
-      type: Boolean,
-      default: true
+    isBlock() {
+      return this.$store.state.loader.isBlock
     }
   }
 }
