@@ -85,8 +85,12 @@
     <div
         class="button-primary"
         @click="enterName"
-        v-if="showNameInputButton"
+        v-if="showNameInputButton || nameEntered"
     >
+      다음
+    </div>
+    <div class="button-primary"
+    v-if="allInfoEntered">
       다음
     </div>
   </div>
@@ -113,6 +117,7 @@ export default {
       cellphone: "",
       cellphoneDisplay: "",
       cellphoneEntered: false,
+      cellphoneError: "",
       ssn: "",
       focus: null,
       showCellphone: false,
@@ -127,7 +132,17 @@ export default {
       return nameValidator(this.name)
     },
     allInfoEntered() {
-      return this.nameEntered === true && this.cellphoneEntered === true && this.ssn.length === 13
+      if (this.nameEntered === true && nameValidator(this.name) === true) {
+        try {
+          cellphoneValidator(this.cellphone)
+          ssnValidator(this.ssn)
+          return true
+        } catch {
+          return false
+        }
+      } else {
+        return false
+      }
     }
   },
   methods: {
@@ -154,8 +169,8 @@ export default {
     cellphoneInput(event) {
       try {
         const value = onlyDigit(event.target.value).substring(0, 11)
-        cellphoneValidator(value)
-        this.cellphone = value
+        this.cellphone = cellphoneValidator(value)
+        this.cellphoneError = ""
         event.target.value = cellphoneFormatter(this.cellphone)
         this.showSsn = this.showSsn || true
         this.$nextTick(() => {
@@ -165,6 +180,7 @@ export default {
         })
       } catch (e) {
         this.cellphone = onlyDigit(event.target.value).substring(0, 11)
+        this.cellphoneError = e
       }
     },
     cellphoneInputFocus(event) {

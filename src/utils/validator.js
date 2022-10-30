@@ -5,6 +5,7 @@ const onlyDigit = (value) => {
 }
 
 const cellphoneValidator = (value) => {
+    console.log(value)
     var cellphone = onlyDigit(value)
     try {
         if (cellphone.length !== 11) {
