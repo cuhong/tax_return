@@ -78,9 +78,9 @@
               ref="name"
               @focus="nameInputFocus"
               @blur="nameInputBlur"
-              @keydown.enter="enterName"
+              @keyup.enter.prevent="enterName"
+              @keyup.tab.prevent = "enterName"
               tabindex="1">
-<!--          v-on:keydown.enter.prevent="enterName"-->
         </div>
       </div>
     </div>
@@ -149,16 +149,19 @@ export default {
   },
   methods: {
     enterName() {
-      this.showNameInputButton = false
-      this.showCellphone = true
-      this.$nextTick(() => {
-        setTimeout(() => {
-          this.$refs['cellphone'].focus()
-        }, 300)
-      })
+      if (nameValidator(this.name)) {
+        this.showNameInputButton = false
+        this.showCellphone = true
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs['cellphone'].focus()
+          }, 300)
+        })
+      } else {
+        alert("이름을 입력해주세요.")
+      }
     },
     nameInput(event) {
-      console.log(event)
       this.showNameInputButton = nameValidator(this.name)
       this.name = event.target.value
     },
