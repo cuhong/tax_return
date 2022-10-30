@@ -1,7 +1,11 @@
 <template>
-  <PersonalServiceAgree :height="height" v-if="showServicePolicy"/>
+  <ServiceAgree :height="height" v-if="showServicePolicy" @closeModal="() => {showServicePolicy=false}"/>
+  <PrivacyAgree :height="height" v-if="showPrivacyPolicy" @closeModal="() => {showPrivacyPolicy=false}"/>
   <Transition name="show-agree-modal">
-    <PolicyAgree :height="height" v-if="showAgreeModal" @closeModal="() => {showAgreeModal=false}"/>
+    <PolicyAgree :height="height" v-if="showAgreeModal"
+                 @closeModal="() => {showAgreeModal=false}"
+                 @showServicePolicy="() => {showServicePolicy=true}"
+                 @showPrivacyPolicy="() => {showPrivacyPolicy=true}"/>
   </Transition>
   <FullscreenOverlay :height="height" v-if="showAgreeModal"/>
   <div class="main-container">
@@ -110,7 +114,8 @@ import PolicyAgree from "./PolicyAgree.vue";
 import FullscreenOverlay from "../commons/FullscreenOverlay.vue";
 import {nameValidator, ssnValidator, cellphoneValidator, onlyDigit} from "../../utils/validator.js";
 import {cellphoneFormatter, ssnFormatter} from "../../utils/formatter.js";
-import PersonalServiceAgree from "./policy/PersonalServiceAgree.vue";
+import ServiceAgree from "../policy/ServiceAgree.vue";
+import PrivacyAgree from "../policy/PrivacyAgree.vue";
 
 export default {
   name: "Personal",
@@ -118,7 +123,8 @@ export default {
     TopBar,
     PolicyAgree,
     FullscreenOverlay,
-    PersonalServiceAgree
+    ServiceAgree,
+    PrivacyAgree
   },
   mounted() {
     setTimeout(() => {
@@ -145,6 +151,7 @@ export default {
       showSsn: false,
       showAgreeModal: false,
       showServicePolicy: false,
+      showPrivacyPolicy: false,
       height: this.$store.getters['layout/height']
     }
   },

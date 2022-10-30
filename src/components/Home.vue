@@ -1,4 +1,6 @@
 <template>
+  <ServiceAgree :height="height" v-if="showServicePolicy" @closeModal="() => {showServicePolicy=false}"/>
+  <PrivacyAgree :height="height" v-if="showPrivacyPolicy" @closeModal="() => {showPrivacyPolicy=false}"/>
   <div class="main-container">
     <TopBar/>
     <div class="page-title mb-3 mt-3">
@@ -27,8 +29,8 @@
         <div>Copyright © Law Office Munjung. All rights reserved.</div>
       </div>
       <div class="policy">
-        <div @click="goToPolicyService">이용약관</div>
-        <div @click="goToPolicyPrivacy">개인정보 처리방침</div>
+        <div style="cursor: pointer; user-select: none" @click="() => {showServicePolicy=true}">이용약관</div>
+        <div style="cursor: pointer; user-select: none" @click="() => {showPrivacyPolicy=true}">개인정보 처리방침</div>
       </div>
     </div>
   </div>
@@ -36,22 +38,31 @@
 
 <script>
 import TopBar from "../components/partials/TopBar.vue";
-// import Loader from "../components/partials/Loader.vue";
+import ServiceAgree from "./policy/ServiceAgree.vue";
+import PrivacyAgree from "./policy/PrivacyAgree.vue";
 
 export default {
   name: "Home",
   components: {
-    TopBar
+    TopBar,
+    ServiceAgree,
+    PrivacyAgree
   },
   methods: {
     goToLogin() {
       this.$router.push({name:'Login', query: {next: "CompanyReceipt"}})
-    },
-    goToPolicyService() {
-      this.$router.push({name:'PolicyService'})
-    },
-    goToPolicyPrivacy() {
-      this.$router.push({name:'PolicyPrivacy'})
+    }
+  },
+  watch: {
+    '$store.state.layout.height'(val) {
+      this.height = val;
+    }
+  },
+  data() {
+    return {
+      showServicePolicy: false,
+      showPrivacyPolicy: false,
+      height: this.$store.getters['layout/height']
     }
   }
 }

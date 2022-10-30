@@ -29,7 +29,7 @@
             :is-bold="false"
             @update="(val) => {isServiceAgree = val}"
         />
-        <div class="policyDetail">내용보기</div>
+        <div class="policyDetail" @click="() => {$emit('showServicePolicy')}">내용보기</div>
       </div>
       <div class="mb-3 d-flex justify-content-between align-items-center">
         <Checkbox
@@ -39,7 +39,7 @@
             :is-bold="false"
             @update="(val) => {isPrivacyAgree = val}"
         />
-        <div class="policyDetail">내용보기</div>
+        <div class="policyDetail" @click="() => {$emit('showPrivacyPolicy')}">내용보기</div>
       </div>
     </div>
     </div>
@@ -66,7 +66,7 @@ export default {
       default: "100%"
     },
   },
-  emits: ['closeModal'],
+  emits: ['closeModal', 'showServicePolicy', 'showPrivacyPolicy'],
   methods: {
     closeModal() {
       this.$emit('closeModal');

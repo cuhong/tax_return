@@ -28,31 +28,5 @@ export default {
 </script>
 
 <style scoped>
-.topbar-container {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  display: flex;
-  height: 56px;
-  width: 100%;
-  justify-content: space-between;
-}
 
-.logo {
-  object-fit: cover;
-  height: 100%;
-  cursor: pointer;
-}
-
-.contact-button {
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 24px;
-  color: rgb(105, 112, 119);
-  background-color: rgb(246, 246, 246);
-  padding-left: 5px;
-  padding-right: 5px;
-  height: 28px;
-  user-select: none;
-}
 </style>
