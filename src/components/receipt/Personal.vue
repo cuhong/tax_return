@@ -78,7 +78,6 @@
               ref="name"
               @focus="nameInputFocus"
               @blur="nameInputBlur"
-<!--              @keyup.enter="enterName"-->
               tabindex="1">
         </div>
       </div>
