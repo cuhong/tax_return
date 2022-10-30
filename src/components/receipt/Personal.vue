@@ -7,13 +7,13 @@
 <template>
   <div class="main-container-container">
     <TopBar/>
-    <div class="page-title mb-3 mt-3">
-      개인사업자 서류 접수
+    <div class="page-title mb-5 mt-3">
+      프리랜서/개인사업자 서류 접수
     </div>
-    <div class="page-sub-text mb-5">
-      <div>개인사업자 세금 환급을 위해</div>
-      <div>필요한 정보를 입력해주세요.</div>
-    </div>
+<!--    <div class="page-sub-text mb-5">-->
+<!--      <div>개인사업자 세금 환급을 위해</div>-->
+<!--      <div>필요한 정보를 입력해주세요.</div>-->
+<!--    </div>-->
     <div>
       <Transition name="slide">
         <div v-show="showSsn">
@@ -78,8 +78,9 @@
               ref="name"
               @focus="nameInputFocus"
               @blur="nameInputBlur"
-              v-on:keydown.enter.prevent="enterName"
+              @keydown.enter="enterName"
               tabindex="1">
+<!--          v-on:keydown.enter.prevent="enterName"-->
         </div>
       </div>
     </div>
@@ -157,6 +158,7 @@ export default {
       })
     },
     nameInput(event) {
+      console.log(event)
       this.showNameInputButton = nameValidator(this.name)
       this.name = event.target.value
     },
