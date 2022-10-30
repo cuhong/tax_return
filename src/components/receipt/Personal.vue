@@ -190,6 +190,9 @@ export default {
     ssnInput(event) {
       this.ssn = onlyDigit(event.target.value).substring(0, 13)
       event.target.value = ssnFormatter(this.ssn)
+      setTimeout(() => {
+        this.$refs['ssn'].blur()
+      }, 300)
     },
     ssnInputFocus(event) {
       this.focus = 'ssn'
