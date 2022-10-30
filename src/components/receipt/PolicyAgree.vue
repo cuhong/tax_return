@@ -45,9 +45,21 @@
     </div>
 
     <div class="mb-1">
-      <div class="button-primary">
-        다음
-      </div>
+      <template v-if="isServiceAgree === true && isPrivacyAgree === true">
+        <div
+            class="button-primary"
+            @click="construction()"
+        >
+          다음
+        </div>
+      </template>
+      <template v-else>
+        <div
+            class="button-disabled"
+        >
+          다음
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -68,6 +80,9 @@ export default {
   },
   emits: ['closeModal', 'showServicePolicy', 'showPrivacyPolicy'],
   methods: {
+    construction() {
+      alert("준비중입니다.");
+    },
     closeModal() {
       this.$emit('closeModal');
     },

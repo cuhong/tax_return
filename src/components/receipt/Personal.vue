@@ -230,6 +230,7 @@ export default {
         this.ssn = ssnValidator(value)
         setTimeout(() => {
           this.$refs['ssn'].blur()
+          this.showAgreeModal = true
         }, 300)
       } catch (e) {
         this.ssn = value

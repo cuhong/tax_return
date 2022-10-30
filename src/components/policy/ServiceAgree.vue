@@ -1,7 +1,7 @@
 <template>
-  <div class="fullscreen-white-overlay" :style="{height: this.height}">
+  <div class="fullscreen-white-overlay px-2" :style="{height: this.height}">
 
-    <div class="topbar-container">
+    <div class="topbar-container px-1">
       <img class="logo" alt="logo" src="../../assets/logo/logo-color-small.png">
       <div style="cursor: pointer; user-select: none" @click="closeModal">
         닫기

@@ -192,7 +192,10 @@
 }
 
 .topbar-container {
-    padding: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 0;
+    padding-right: 0;
     display: flex;
     height: 56px;
     width: 100%;
@@ -216,4 +219,9 @@
     padding-right: 5px;
     height: 28px;
     user-select: none;
+}
+
+.main-container {
+    padding-left: 0rem;
+    padding-right: 0rem;
 }

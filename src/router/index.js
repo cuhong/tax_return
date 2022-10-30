@@ -10,18 +10,6 @@ const routes = [
         meta: {requireAuth: null}
     },
     {
-        path: "/policy/privacy",
-        name: "PolicyPrivacy",
-        component: () => import("../components/policy/Privacy.vue"),
-        meta: {requireAuth: null}
-    },
-    {
-        path: "/policy/service",
-        name: "PolicyService",
-        component: () => import("../components/policy/Service.vue"),
-        meta: {requireAuth: null}
-    },
-    {
         path: "/login",
         name: "Login",
         component: () => import("../components/auth/Login.vue"),
