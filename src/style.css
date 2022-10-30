@@ -123,3 +123,16 @@
     opacity: 0;
     /*transform: translateY(2rem) translateX(0.5rem);*/
 }
+
+.restricted-width {
+    max-width: 592px;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    overflow: auto;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+    justify-content: space-between;
+    overflow-y: auto;
+}

@@ -21,23 +21,12 @@ export default {
   methods: {
     setHeight() {
       var height = document.documentElement.clientHeight;
+      this.$store.commit('layout/setHeight', `${height}px`);
       this.$refs['main'].style.height = `${height}px`;
     }
   }
 }
 </script>
 <style scoped>
-.restricted-width {
-  max-width: 592px;
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  overflow: auto;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
-  padding-bottom: 1.5rem;
-  justify-content: space-between;
-  overflow-y: auto;
-}
 </style>
 

@@ -1,19 +1,18 @@
-<!--/**-->
-<!--# singo2 = TilkoComplexTaxReport(-->
-<!--#     "6", "홍찬의", "19860906", "01024846313", "8609061020710",-->
-<!--#     "20200101", "20201231", api_key-->
-<!--# )-->
-<!--**/-->
 <template>
-  <div class="main-container-container">
+  <PersonalServiceAgree :height="height" v-if="showServicePolicy"/>
+  <Transition name="show-agree-modal">
+    <PolicyAgree :height="height" v-if="showAgreeModal" @closeModal="() => {showAgreeModal=false}"/>
+  </Transition>
+  <FullscreenOverlay :height="height" v-if="showAgreeModal"/>
+  <div class="main-container">
     <TopBar/>
     <div class="page-title mb-5 mt-3">
       프리랜서/개인사업자 서류 접수
     </div>
-<!--    <div class="page-sub-text mb-5">-->
-<!--      <div>개인사업자 세금 환급을 위해</div>-->
-<!--      <div>필요한 정보를 입력해주세요.</div>-->
-<!--    </div>-->
+    <!--    <div class="page-sub-text mb-5">-->
+    <!--      <div>개인사업자 세금 환급을 위해</div>-->
+    <!--      <div>필요한 정보를 입력해주세요.</div>-->
+    <!--    </div>-->
     <div>
       <Transition name="slide">
         <div v-show="showSsn">
@@ -79,7 +78,7 @@
               @focus="nameInputFocus"
               @blur="nameInputBlur"
               @keyup.enter.prevent="enterName"
-              @keyup.tab.prevent = "enterName"
+              @keyup.tab.prevent="enterName"
               tabindex="1">
         </div>
       </div>
@@ -87,37 +86,49 @@
   </div>
   <div class="bottom-container">
     <Transition name="button-slide">
-    <div
-        class="button-primary"
-        @click="enterName"
-        v-if="showNameInputButton"
-    >
-      다음
-    </div>
+      <div
+          class="button-primary"
+          @click="enterName"
+          v-if="showNameInputButton"
+      >
+        다음
+      </div>
     </Transition>
-      <Transition name="button-slide">
-    <div class="button-primary"
-    v-if="allInfoEntered">
-      다음
-    </div>
-      </Transition>
+    <Transition name="button-slide">
+      <div class="button-primary"
+           v-if="allInfoEntered"
+           @click="showAgreeModal=true">
+        다음
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script>
 import TopBar from "../partials/TopBar.vue";
+import PolicyAgree from "./PolicyAgree.vue";
+import FullscreenOverlay from "../commons/FullscreenOverlay.vue";
 import {nameValidator, ssnValidator, cellphoneValidator, onlyDigit} from "../../utils/validator.js";
 import {cellphoneFormatter, ssnFormatter} from "../../utils/formatter.js";
+import PersonalServiceAgree from "./policy/PersonalServiceAgree.vue";
 
 export default {
   name: "Personal",
   components: {
-    TopBar
+    TopBar,
+    PolicyAgree,
+    FullscreenOverlay,
+    PersonalServiceAgree
   },
   mounted() {
     setTimeout(() => {
       this.$refs.name.focus();
     }, 300);
+  },
+  watch: {
+    '$store.state.layout.height'(val) {
+      this.height = val;
+    }
   },
   data() {
     return {
@@ -131,7 +142,10 @@ export default {
       ssn: "",
       focus: null,
       showCellphone: false,
-      showSsn: false
+      showSsn: false,
+      showAgreeModal: false,
+      showServicePolicy: false,
+      height: this.$store.getters['layout/height']
     }
   },
   computed: {
@@ -227,6 +241,7 @@ export default {
 
 <style scoped>
 
+
 .button-primary {
   flex-direction: row;
   padding-left: 1rem;
@@ -312,6 +327,16 @@ export default {
 
 .input-text:focus::placeholder {
   color: rgba(0, 0, 0, 0);
+}
+
+
+.show-agree-modal-enter-from,
+.show-agree-modal-leave-to{
+  transform: translateY(100%);
+}
+.show-agree-modal-enter-active,
+.show-agree-modal-leave-active {
+  transition: transform 0.2s ease-out;
 }
 
 .label-fade-enter-active {
