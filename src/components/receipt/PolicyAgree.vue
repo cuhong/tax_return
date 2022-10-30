@@ -1,5 +1,6 @@
 <template>
   <div class="overlay-popup" :style="{height: this.height}">
+    <div>
     <div class="d-flex justify-content-between align-items-stretch mb-4 mt-2">
       <div class="page-title">
         <div>서비스 이용을 위해</div>
@@ -10,15 +11,15 @@
       </div>
     </div>
     <div>
-        <Checkbox
-            :input-ref="'agreeAll'"
-            :label="'전체 약관 동의'"
-            :is-checked="isAllChecked"
-            :is-bold="true"
-            @update="(val) => {isAllChecked = val}"
-            class="mb-3"
-            @click="checkAll"
-        />
+      <Checkbox
+          :input-ref="'agreeAll'"
+          :label="'전체 약관 동의'"
+          :is-checked="isAllChecked"
+          :is-bold="true"
+          @update="(val) => {isAllChecked = val}"
+          class="mb-3"
+          @click="checkAll"
+      />
       <hr>
       <div class="mb-3 d-flex justify-content-between align-items-center">
         <Checkbox
@@ -41,12 +42,19 @@
         <div class="policyDetail">내용보기</div>
       </div>
     </div>
+    </div>
 
+    <div class="mb-1">
+      <div class="button-primary">
+        다음
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Checkbox from "../commons/input/Checkbox.vue";
+
 export default {
   name: "PolicyAgree",
   components: {
@@ -72,19 +80,6 @@ export default {
         this.isPrivacyAgree = true
       }
     }
-  },
-  watch: {
-    // isServiceAgree(newVal, oldVale) {
-    //   console.log("this.isServiceAgree")
-    //   console.log(this.isServiceAgree)
-    //   console.log("this.isPrivacyAgree")
-    //   console.log(this.isPrivacyAgree)
-    // if (newVal, old)
-    //   this.isAllChecked = this.isServiceAgree === true && this.isPrivacyAgree === true
-    // },
-    // isPrivacyAgree(val) {
-    //   // this.isAllChecked = this.isServiceAgree === true && this.isPrivacyAgree === true
-    // }
   },
   data() {
     return {
@@ -115,6 +110,7 @@ export default {
   display: flex;
   flex-direction: column;
   /*transform: translateY(100%);*/
+  justify-content: space-between;
 }
 
 .policyDetail {
