@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import {verifyToken} from "../services/auth.js";
+import store from "../store/index.js";
 
 const routes = [
     {
@@ -53,23 +54,28 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     const requireAuth = to.meta.requireAuth
-    const authStatus = await verifyToken()
     if (requireAuth === null) {
         next();
-    } else if (requireAuth === true) {
-        // 로그인이 필요한 페이지
-        if (authStatus) {
-            next();
-        } else {
-            next({name: "Login"});
-        }
     } else {
-        if (authStatus) {
-            // 로그인이 되어 있는 경우 접수 화면으로 이동
-            next({name: "CompanyReceipt"});
+        console.log(store)
+        store.commit('loader/setIsLoading', true);
+        const authStatus = await verifyToken()
+        store.commit('loader/setIsLoading', false);
+        if (requireAuth === true) {
+            // 로그인이 필요한 페이지
+            if (authStatus) {
+                next();
+            } else {
+                next({name: "Login"});
+            }
         } else {
-            // 로그인이 안되어 있다면 페이지를 정상적으로 표시
-            next();
+            if (authStatus) {
+                // 로그인이 되어 있는 경우 접수 화면으로 이동
+                next({name: "CompanyReceipt"});
+            } else {
+                // 로그인이 안되어 있다면 페이지를 정상적으로 표시
+                next();
+            }
         }
     }
 })
