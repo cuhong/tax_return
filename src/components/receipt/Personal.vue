@@ -78,6 +78,7 @@
               ref="name"
               @focus="nameInputFocus"
               @blur="nameInputBlur"
+              v-on:keydown.enter.prevent="enterName"
               tabindex="1">
         </div>
       </div>
