@@ -121,7 +121,7 @@ export default {
     return {
       businessType: 'personal',
       name: "",
-      showNameInputButton: false,
+      // showNameInputButton: false,
       cellphone: "",
       cellphoneDisplay: "",
       cellphoneEntered: false,
@@ -133,6 +133,12 @@ export default {
     }
   },
   computed: {
+    showNameInputButton() {
+      if (this.showCellphone === true) {
+        return false
+      }
+      return nameValidator(this.name)
+    },
     allInfoEntered() {
       try {
         if (nameValidator(this.name) === false) {
@@ -150,7 +156,7 @@ export default {
   methods: {
     enterName() {
       if (nameValidator(this.name)) {
-        this.showNameInputButton = false
+        // this.showNameInputButton = false
         this.showCellphone = true
         this.$nextTick(() => {
           setTimeout(() => {
@@ -162,7 +168,7 @@ export default {
       }
     },
     nameInput(event) {
-      this.showNameInputButton = nameValidator(this.name)
+      // this.showNameInputButton = nameValidator(this.name)
       this.name = event.target.value
     },
     nameInputFocus(event) {
