@@ -115,7 +115,9 @@ export default {
     TopBar
   },
   mounted() {
-    this.$refs['name'].focus();
+    setTimeout(() => {
+      this.$refs.name.focus();
+    }, 300);
   },
   data() {
     return {
