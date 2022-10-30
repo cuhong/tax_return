@@ -85,7 +85,7 @@
     <div
         class="button-primary"
         @click="enterName"
-        v-if="showNameInputButton || nameEntered"
+        v-if="showNameInputButton"
     >
       다음
     </div>
@@ -113,7 +113,7 @@ export default {
     return {
       businessType: 'personal',
       name: "",
-      nameEntered: false,
+      showNameInputButton: true,
       cellphone: "",
       cellphoneDisplay: "",
       cellphoneEntered: false,
@@ -125,29 +125,23 @@ export default {
     }
   },
   computed: {
-    showNameInputButton() {
-      if (this.nameEntered === true) {
-        return false
-      }
-      return nameValidator(this.name)
-    },
     allInfoEntered() {
-      if (this.nameEntered === true && nameValidator(this.name) === true) {
-        try {
-          cellphoneValidator(this.cellphone)
-          ssnValidator(this.ssn)
-          return true
-        } catch {
+      try {
+        if (nameValidator(this.name) === false) {
           return false
         }
-      } else {
+        cellphoneValidator(this.cellphone)
+        ssnValidator(this.ssn)
+        return true
+      } catch {
         return false
       }
+
     }
   },
   methods: {
     enterName() {
-      this.nameEntered = true
+      this.showNameInputButton = false
       this.showCellphone = true
       this.$nextTick(() => {
         setTimeout(() => {
@@ -157,7 +151,6 @@ export default {
     },
     nameInput(event) {
       console.log(event)
-      this.nameEntered = false
       this.name = event.target.value
     },
     nameInputFocus(event) {

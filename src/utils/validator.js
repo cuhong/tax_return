@@ -21,7 +21,7 @@ const cellphoneValidator = (value) => {
 }
 
 const nameValidator = (value) => {
-    return (value.length >= 2)
+    return value.length >= 2
 }
 
 const ssnValidator = (value) => {
