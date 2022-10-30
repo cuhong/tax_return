@@ -20,14 +20,7 @@ const cellphoneValidator = (value) => {
 }
 
 const nameValidator = (value) => {
-    try {
-        if (value.length < 2) {
-            throw "이름은 2글자 이상 입력하세요."
-        }
-        return value
-    } catch (e) {
-        throw e
-    }
+    return (value.length >= 2)
 }
 
 const ssnValidator = (value) => {

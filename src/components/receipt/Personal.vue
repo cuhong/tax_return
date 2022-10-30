@@ -16,33 +16,36 @@
     </div>
     <div>
       <Transition name="slide">
-      <div v-show="cellphoneEntered">
-        <div class="input-text-container mb-3">
-          <div :class="{'input-header-focused': focus === 'ssn', 'input-header': focus !== 'ssn'}">
-            주민등록번호
+        <div v-show="showSsn">
+          <div class="input-text-container">
+            <Transition name="label-fade">
+              <label v-if="focus==='ssn' || this.ssn !== ''" class="input-header">주민등록번호</label>
+            </Transition>
+            <label v-if="focus!=='ssn'" class="input-header-hidden">주민등록번호</label>
+            <input
+                placeholder="주민등록번호"
+                class="input-text"
+                type="text"
+                inputmode="decimal"
+                pattern="\d*"
+                @input="ssnInput"
+                @focus="ssnInputFocus"
+                @blur="ssnInputBlur"
+                name="ssn"
+                id="ssn"
+                ref="ssn">
           </div>
-          <label class="label-text" for="ssn">주민등록번호</label>
-          <input class="input-text"
-                 type="text"
-                 inputmode="decimal"
-                 pattern="\d*"
-                 @input="ssnInput"
-                 @focus="ssnInputFocus"
-                 @blur="ssnInputBlur"
-                 name="ssn"
-                 id="ssn"
-                 ref="ssn">
         </div>
-      </div>
       </Transition>
       <Transition name="slide">
-        <div v-show="nameEntered">
-          <div class="input-text-container mb-3">
-            <div :class="{'input-header-focused': focus === 'cellphone', 'input-header': focus !== 'cellphone'}">
-              휴대전화번호
-            </div>
-            <label class="label-text" for="cellphone">휴대전화번호</label>
+        <div v-show="showCellphone">
+          <div class="input-text-container">
+            <Transition name="label-fade">
+              <label v-if="focus==='cellphone' || this.cellphone !== ''" class="input-header">휴대폰 번호</label>
+            </Transition>
+            <label v-if="focus!=='cellphone'" class="input-header-hidden">휴대폰 번호</label>
             <input
+                placeholder="휴대폰 번호"
                 class="input-text"
                 type="text"
                 inputmode="decimal"
@@ -59,34 +62,32 @@
 
       <div>
         <div class="input-text-container">
-          <div :class="{'input-header-focused': focus === 'name', 'input-header': focus !== 'name'}">
-            신청자명
-          </div>
-          <label class="label-text" for="name">신청자명</label>
+          <Transition name="label-fade">
+            <label v-if="focus==='name' || this.name !== ''" class="input-header">이름</label>
+          </Transition>
+          <label v-if="focus!=='name'" class="input-header-hidden">이름</label>
           <input
+              placeholder="이름"
               class="input-text"
               type="text"
               @input="nameInput"
               name="name"
               id="name"
               ref="name"
-              @focus="focus='name'"
-              @blur="focus=null"
+              @focus="nameInputFocus"
+              @blur="nameInputBlur"
               @keyup.enter="enterName">
-          <small v-if="nameError">
-            {{nameError}}
-          </small>
         </div>
       </div>
     </div>
   </div>
   <div class="bottom-container">
     <div
-      class="button-primary"
-      @click="enterName"
-      v-if="!nameEntered"
+        class="button-primary"
+        @click="enterName"
+        v-if="showNameInputButton"
     >
-      {{ this.businessType === null ? "사업자 형태를 선택하세요" : "다음 단계" }}
+      다음
     </div>
   </div>
 </template>
@@ -108,46 +109,61 @@ export default {
     return {
       businessType: 'personal',
       name: "",
-      nameError: null,
       nameEntered: false,
       cellphone: "",
       cellphoneDisplay: "",
       cellphoneEntered: false,
       ssn: "",
       focus: null,
+      showCellphone: false,
+      showSsn: false
+    }
+  },
+  computed: {
+    showNameInputButton() {
+      if (this.nameEntered === true) {
+        return false
+      }
+      return nameValidator(this.name)
+    },
+    allInfoEntered() {
+      return this.nameEntered === true && this.cellphoneEntered === true && this.ssn.length === 13
     }
   },
   methods: {
     enterName() {
-      try {
-        nameValidator(this.name)
-        this.nameEntered = true
-        this.$nextTick(() => {
+      this.nameEntered = true
+      this.showCellphone = true
+      this.$nextTick(() => {
+        setTimeout(() => {
           this.$refs['cellphone'].focus()
-        })
-      } catch (e) {
-        this.nameError = e
-        this.$refs['name'].focus()
-      }
+        }, 300)
+      })
     },
     nameInput(event) {
-      this.nameError = null
+      console.log(event)
       this.nameEntered = false
       this.name = event.target.value
     },
+    nameInputFocus(event) {
+      this.focus = 'name'
+    },
+    nameInputBlur(event) {
+      this.focus = null
+    },
     cellphoneInput(event) {
       try {
-        this.cellphoneEntered = false
         const value = onlyDigit(event.target.value).substring(0, 11)
         cellphoneValidator(value)
         this.cellphone = value
         event.target.value = cellphoneFormatter(this.cellphone)
-        this.cellphoneEntered = true
+        this.showSsn = this.showSsn || true
         this.$nextTick(() => {
-          this.$refs['ssn'].focus()
+          setTimeout(() => {
+            this.$refs['ssn'].focus()
+          }, 300)
         })
       } catch (e) {
-        this.cellphoneEntered = false
         this.cellphone = onlyDigit(event.target.value).substring(0, 11)
       }
     },
@@ -156,6 +172,7 @@ export default {
       event.target.value = onlyDigit(event.target.value)
     },
     cellphoneInputBlur(event) {
+      this.focus = null
       event.target.value = cellphoneFormatter(onlyDigit(event.target.value))
     },
     ssnInput(event) {
@@ -229,14 +246,14 @@ export default {
   user-select: none;
 }
 
-.label-text {
-  display: none;
-}
+/*.label-text {*/
+/*  display: none;*/
+/*}*/
 
 .input-text {
-  border:none;
+  border: none;
   border-bottom: rgb(145, 145, 145) 1px solid;
-  padding: 1rem;
+  /*padding: 1rem;*/
   outline: none;
   width: 100%;
   background-color: white;
@@ -245,7 +262,12 @@ export default {
   color: rgb(105, 112, 119);
   cursor: default;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
+  padding: 0.4rem;
+}
+
+.input-text:focus {
+  font-size: 1.5rem;
 }
 
 .input-text:focus {
@@ -253,24 +275,37 @@ export default {
   outline: 0;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+.input-text:focus::placeholder {
+  color: rgba(0, 0, 0, 0);
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.label-fade-enter-active {
+  transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+}
+
+.label-fade-leave-active {
+  transition: opacity 0.1s ease-in, transform 0.1s ease-in;
+}
+
+.label-fade-enter-from {
+  transform: translateY(2rem) translateX(0.5rem);
   opacity: 0;
+}
+
+.label-fade-leave-to {
+  transform: translateY(2rem) translateX(0.5rem);
+  opacity: 100;
 }
 
 
 .slide-leave-active,
 .slide-enter-active {
-  transition: transform 0.2s ease;
+  transition: transform 0.1s ease;
 }
+
 .slide-enter-from,
 .slide-leave-to {
-  transform: translate(0, 30%);
+  transform: translateY(-2rem);
 }
 
 </style>
