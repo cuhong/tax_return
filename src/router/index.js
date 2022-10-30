@@ -60,7 +60,6 @@ router.beforeEach(async (to, from, next) => {
         console.log(store)
         store.commit('loader/setIsLoading', true);
         const authStatus = await verifyToken()
-        store.commit('loader/setIsLoading', false);
         if (requireAuth === true) {
             // 로그인이 필요한 페이지
             if (authStatus) {
@@ -77,6 +76,7 @@ router.beforeEach(async (to, from, next) => {
                 next();
             }
         }
+        store.commit('loader/setIsLoading', false);
     }
 })
 
