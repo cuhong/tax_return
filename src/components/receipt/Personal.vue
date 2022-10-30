@@ -177,6 +177,11 @@ export default {
     }
   },
   methods: {
+    hidePolicy() {
+      console.log('hide')
+      this.showServicePolicy = false;
+      this.showPrivacyPolicy = false;
+    },
     enterName() {
       if (nameValidator(this.name)) {
         // this.showNameInputButton = false
