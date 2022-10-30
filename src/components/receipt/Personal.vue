@@ -85,6 +85,7 @@
     </div>
   </div>
   <div class="bottom-container">
+    <Transition name="button-slide">
     <div
         class="button-primary"
         @click="enterName"
@@ -92,10 +93,13 @@
     >
       다음
     </div>
+    </Transition>
+      <Transition name="button-slide">
     <div class="button-primary"
     v-if="allInfoEntered">
       다음
     </div>
+      </Transition>
   </div>
 </template>
 
@@ -116,7 +120,7 @@ export default {
     return {
       businessType: 'personal',
       name: "",
-      showNameInputButton: true,
+      showNameInputButton: false,
       cellphone: "",
       cellphoneDisplay: "",
       cellphoneEntered: false,
@@ -153,7 +157,7 @@ export default {
       })
     },
     nameInput(event) {
-      console.log(event)
+      this.showNameInputButton = nameValidator(this.name)
       this.name = event.target.value
     },
     nameInputFocus(event) {
@@ -163,11 +167,10 @@ export default {
       this.focus = null
     },
     cellphoneInput(event) {
+      const value = onlyDigit(event.target.value).substring(0, 11)
+      event.target.value = cellphoneFormatter(value)
       try {
-        const value = onlyDigit(event.target.value).substring(0, 11)
         this.cellphone = cellphoneValidator(value)
-        this.cellphoneError = ""
-        event.target.value = cellphoneFormatter(this.cellphone)
         this.showSsn = this.showSsn || true
         this.$nextTick(() => {
           setTimeout(() => {
@@ -175,8 +178,7 @@ export default {
           }, 300)
         })
       } catch (e) {
-        this.cellphone = onlyDigit(event.target.value).substring(0, 11)
-        this.cellphoneError = e
+        this.cellphone = value
       }
     },
     cellphoneInputFocus(event) {
@@ -188,11 +190,16 @@ export default {
       event.target.value = cellphoneFormatter(onlyDigit(event.target.value))
     },
     ssnInput(event) {
-      this.ssn = onlyDigit(event.target.value).substring(0, 13)
-      event.target.value = ssnFormatter(this.ssn)
-      setTimeout(() => {
-        this.$refs['ssn'].blur()
-      }, 300)
+      const value = onlyDigit(event.target.value).substring(0, 13)
+      event.target.value = ssnFormatter(value)
+      try {
+        this.ssn = ssnValidator(value)
+        setTimeout(() => {
+          this.$refs['ssn'].blur()
+        }, 300)
+      } catch (e) {
+        this.ssn = value
+      }
     },
     ssnInputFocus(event) {
       this.focus = 'ssn'
@@ -309,6 +316,24 @@ export default {
 
 .label-fade-leave-to {
   transform: translateY(2rem) translateX(0.5rem);
+  opacity: 100;
+}
+
+.button-slide-enter-active {
+  transition: opacity 0.1s ease-out, transform 0.1s ease-out;
+}
+
+.button-slide-leave-active {
+  transition: opacity 0.1s ease-in, transform 0.1s ease-in;
+}
+
+.button-slide-enter-from {
+  transform: translateY(2rem);
+  opacity: 0;
+}
+
+.button-slide-leave-to {
+  transform: translateY(2rem);
   opacity: 100;
 }
 
