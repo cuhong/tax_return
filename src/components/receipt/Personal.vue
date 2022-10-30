@@ -33,7 +33,8 @@
                 @blur="ssnInputBlur"
                 name="ssn"
                 id="ssn"
-                ref="ssn">
+                ref="ssn"
+                tabindex="3">
           </div>
         </div>
       </Transition>
@@ -55,7 +56,8 @@
                 @blur="cellphoneInputBlur"
                 name="cellphone"
                 id="cellphone"
-                ref="cellphone">
+                ref="cellphone"
+                tabindex="2">
           </div>
         </div>
       </Transition>
@@ -76,7 +78,8 @@
               ref="name"
               @focus="nameInputFocus"
               @blur="nameInputBlur"
-              @keyup.enter="enterName">
+              @keyup.enter="enterName"
+              tabindex="1">
         </div>
       </div>
     </div>
