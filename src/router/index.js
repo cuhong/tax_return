@@ -33,6 +33,12 @@ const routes = [
         component: () => import("../components/receipt/Personal.vue"),
         meta: {requireAuth: true}
     },
+    {
+        path: "/company/receipt/complete",
+        name: "ReceiptComplete",
+        component: () => import("../components/receipt/Complete.vue"),
+        meta: {requireAuth: true}
+    },
 ];
 
 const router = createRouter({
@@ -45,7 +51,6 @@ router.beforeEach(async (to, from, next) => {
     if (requireAuth === null) {
         next();
     } else {
-        console.log(store)
         store.commit('loader/setIsLoading', true);
         const authStatus = await verifyToken()
         if (requireAuth === true) {

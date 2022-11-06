@@ -26,7 +26,8 @@ const requestKakaoLogin = async (kakaoAuthCode) => {
         const requestUrl = urlJoin(VITE_BACKEND_HOST, "/account/kakao/auth/");
         const response = await axios.post(requestUrl, {
             "redirect_url": redirectUrl,
-            "kakao_auth_code": kakaoAuthCode
+            "kakao_auth_code": kakaoAuthCode,
+            "campaign_code": "2022youtubereturn"
         })
         return {result: true, data: response.data}
     } catch (e) {

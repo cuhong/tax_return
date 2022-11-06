@@ -3,6 +3,10 @@
   <PrivacyAgree :height="height" v-if="showPrivacyPolicy" @closeModal="() => {showPrivacyPolicy=false}"/>
   <Transition name="show-agree-modal">
     <PolicyAgree :height="height" v-if="showAgreeModal"
+                 :ssn="this.ssn"
+                 :name="this.name"
+                 :cellphone="this.cellphone"
+                 :business-type="this.businessType"
                  @closeModal="() => {showAgreeModal=false}"
                  @showServicePolicy="() => {showServicePolicy=true}"
                  @showPrivacyPolicy="() => {showPrivacyPolicy=true}"/>
@@ -37,6 +41,8 @@
                 name="ssn"
                 id="ssn"
                 ref="ssn"
+                @keyup.enter.prevent="enterSsn"
+                @keyup.tab.prevent="enterSsn"
                 tabindex="3">
           </div>
         </div>
@@ -60,6 +66,8 @@
                 name="cellphone"
                 id="cellphone"
                 ref="cellphone"
+                @keyup.enter.prevent="enterCellphone"
+                @keyup.tab.prevent="enterCellphone"
                 tabindex="2">
           </div>
         </div>
@@ -193,6 +201,35 @@ export default {
         })
       } else {
         alert("이름을 입력해주세요.")
+      }
+    },
+    enterSsn() {
+      try {
+        var value = this.ssn
+        this.ssn = ssnValidator(value)
+        setTimeout(() => {
+          this.$refs['ssn'].blur()
+          this.showAgreeModal = true
+        }, 300)
+      } catch (e) {
+        alert("주민등록번호가 올바르지 않습니다.")
+        this.$refs['ssn'].focus()
+        this.ssn = value
+      }
+    },
+    enterCellphone() {
+      try {
+        var value = this.cellphone
+        this.cellphone = cellphoneValidator(value)
+        this.showSsn = this.showSsn || true
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs['ssn'].focus()
+          }, 300)
+        })
+      } catch (e) {
+        alert(e)
+        this.cellphone = value
       }
     },
     nameInput(event) {

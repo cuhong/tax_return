@@ -48,7 +48,7 @@
       <template v-if="isServiceAgree === true && isPrivacyAgree === true">
         <div
             class="button-primary"
-            @click="construction()"
+            @click="registerCampaign()"
         >
           다음
         </div>
@@ -66,6 +66,14 @@
 
 <script>
 import Checkbox from "../commons/input/Checkbox.vue";
+import urlJoin from "url-join";
+import store from "../../store/index.js";
+import {verifyToken} from "../../services/auth.js";
+const {VITE_HOST, VITE_BACKEND_HOST} = import.meta.env;
+import {StorageType, useStorage} from "vue3-storage";
+
+
+const storage = useStorage('allfee_');
 
 export default {
   name: "PolicyAgree",
@@ -77,11 +85,61 @@ export default {
       type: String,
       default: "100%"
     },
+    ssn: {
+      type: String,
+      default: ""
+    },
+    name: {
+      type: String,
+      default: ""
+    },
+    cellphone: {
+      type: String,
+      default: ""
+    },
+    businessType: {
+      type: String,
+      default: ""
+    }
   },
   emits: ['closeModal', 'showServicePolicy', 'showPrivacyPolicy'],
   methods: {
-    construction() {
-      alert("준비중입니다.");
+    async registerCampaign() {
+      var target = null
+      this.closeModal()
+      try {
+        const campaignCode = "2022youtubereturn"
+        const requestUrl = urlJoin(VITE_BACKEND_HOST, `/campaign/${campaignCode}/ledger/`);
+        store.commit('loader/setIsLoading', true);
+        const authStatus = await verifyToken()
+        if (!authStatus) {
+          target = {name: 'Login', query: {redirect: this.$route.fullPath}}
+          throw "로그인이 필요합니다,."
+        }
+        const response = await this.axios.post(
+            requestUrl, {
+              ssn: this.ssn,
+              name: this.name,
+              cellphone: this.cellphone,
+              business_type: this.businessType,
+            }, {
+              headers: {
+                Authorization: `Bearer ${storage.getStorageSync('accessToken')}`
+              }
+            }
+        )
+        if (response.data.code !== "0000") {
+          throw response.data.msg
+        }
+        target = {name: 'ReceiptComplete', query: {ledgerId: response.data.data.id}}
+      } catch (e) {
+        alert(e)
+      } finally {
+        store.commit('loader/setIsLoading', false);
+        if (target) {
+          this.$router.push(target)
+        }
+      }
     },
     closeModal() {
       this.$emit('closeModal');
